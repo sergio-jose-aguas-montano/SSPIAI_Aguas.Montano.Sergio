@@ -219,5 +219,10 @@ primos(P1, P2) :- progenitor(Pa1, P1), progenitor(Pa2, P2), hermanos(Pa1, Pa2), 
 pareja(Fs,Pa) :- novios(Fs,Pa), Fs\=Pa.
 
 tio_politico(Tp,S) :- pareja(S,Pa), progenitor(Su,Pa), hermanos(Tp,Su), (tio(Tp,Pa);tia(Tp,Pa)), Tp\=Su, Tp\=S.
-
 tia_politica(Tp,S) :- pareja(S,Pa), progenitor(Su,Pa), hermanos(Tp,Su), (tio(Tp,Pa);tia(Tp,Pa)), Tp\=Su, Tp\=S.
+
+tio_abuelo(T,S) :- hermanos(T,Ab), progenitor(Ab,Pa), progenitor(Pa,S), hombre(T), T\=S.
+tia_abuela(T,S) :- hermanos(T,Ab), progenitor(Ab,Pa), progenitor(Pa,S), mujer(T), T\=S.
+
+bisabuelo(B,N) :- progenitor(B,Ab), progenitor(Ab,Pa), progenitor(Pa,N), hombre(B).
+bisabuela(B,N) :- progenitor(B,Ab), progenitor(Ab,Pa), progenitor(Pa,N), mujer(B).

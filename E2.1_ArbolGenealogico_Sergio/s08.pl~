@@ -25,7 +25,7 @@ hombre('Sergio'). %papa
 hombre('Guillermo'). %tio
 hombre('Luis'). %primo
 hombre('Luis'). %primo
-hombre('Ñoño'). %primo
+hombre('Nono'). %primo
 hombre('Octavio'). %primo
 hombre('Omar'). %primo
 hombre('Oscar'). %primo
@@ -51,7 +51,7 @@ mujer('Minga'). %tiaabuela_pat
 mujer('Benita'). %tiaabuela_pat
 mujer('Chonita'). %tiaabuela_pat
 mujer('Katalina'). %tiaabuela_pat
-mujer('Toña'). %tiaabuela_pat
+mujer('Tona'). %tiaabuela_pat
 mujer('Maria'). %abuela_mat
 mujer('RosaM'). %tiaabuela_mat
 mujer('Erendida'). %tia
@@ -97,7 +97,7 @@ progenitor('Pantaleon','Minga').
 progenitor('Pantaleon','Benita').
 progenitor('Pantaleon','Chonita').
 progenitor('Pantaleon','Katalina').
-progenitor('Pantaleon','Toña').
+progenitor('Pantaleon','Tona').
 progenitor('Salome','Cesario').
 progenitor('Salome','Isidro').
 progenitor('Jesus','Maria').
@@ -151,7 +151,7 @@ progenitor('Concepcion','Minga').
 progenitor('Concepcion','Benita').
 progenitor('Concepcion','Chonita').
 progenitor('Concepcion','Katalina').
-progenitor('Concepcion','Toña').
+progenitor('Concepcion','Tona').
 progenitor('Matilde','Cesario').
 progenitor('Matilde','Isidro').
 progenitor('Simona','Maria').
@@ -169,7 +169,7 @@ progenitor('Maria','Teresa').
 progenitor('Maria','Guillermo').
 progenitor('Maria','Patricia').
 progenitor('MariaC','Luis').
-progenitor('MariaC','Ñoño').
+progenitor('MariaC','Nono').
 progenitor('MariaC','Corina').
 progenitor('MariaC','Natalia').
 progenitor('MariaC','Isabel').
@@ -219,5 +219,10 @@ primos(P1, P2) :- progenitor(Pa1, P1), progenitor(Pa2, P2), hermanos(Pa1, Pa2), 
 pareja(Fs,Pa) :- novios(Fs,Pa), Fs\=Pa.
 
 tio_politico(Tp,S) :- pareja(S,Pa), progenitor(Su,Pa), hermanos(Tp,Su), (tio(Tp,Pa);tia(Tp,Pa)), Tp\=Su, Tp\=S.
-
 tia_politica(Tp,S) :- pareja(S,Pa), progenitor(Su,Pa), hermanos(Tp,Su), (tio(Tp,Pa);tia(Tp,Pa)), Tp\=Su, Tp\=S.
+
+tio_abuelo(T,S) :- hermanos(T,Ab), progenitor(Ab,Pa), progenitor(Pa,S), hombre(T), T\=S.
+tia_abuela(T,S) :- hermanos(T,Ab), progenitor(Ab,Pa), progenitor(Pa,S), mujer(T), T\=S.
+
+bisabuelo(B,N) :- progenitor(B,Ab), progenitor(Ab,Pa), progenitor(Pa,N), hombre(B).
+bisabuela(B,N) :- progenitor(B,Ab), progenitor(Ab,Pa), progenitor(Pa,N), mujer(B).
