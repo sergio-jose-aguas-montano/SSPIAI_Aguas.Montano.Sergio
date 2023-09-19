@@ -1,8 +1,5 @@
-:- dynamic mamifero/1.
+:- dynamic animal/1.
+animal(delfin).
+animal(leon).
 
-mamifero(delfin).
-mamifero(leon).
-mamifero(halcon).
-mamifero(raton).
-mamifero(lagarto).
-
+carnivoro(leon).
