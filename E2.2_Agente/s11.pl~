@@ -7,7 +7,7 @@ mamifero(leon).
 mamifero(tigre,carnivoro).
 mamifero(oso,omnivoro).
 mamifero(puma,carnivoro).
-listing(mamifero). %devuelve todos los predicados
+%listing(mamifero). devuelve todos los predicados
 
 %Arity - Aridad = Cantidad de parámetros que tiene un predicado
 %assert(mamifero(gato)). insertar un nuevo valor
