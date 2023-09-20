@@ -1,15 +1,15 @@
 %Consultar el archivo S11
 inicio :- consult('S11.3.pl').
 
-agregar(A) :- assert(mamifero(A)).
+agregar(A) :- assert(animal(A)).
 buscar(A) :- respuesta(A).
-eliminar(A) :- retract(mamifero(A)).
+eliminar(A) :- retract(animal(A)).
 %Guardar con tell, listing, told
 guardar :- tell('S11.3.pl'),
         listing(mamifero/1),told,
         write("Guardado ...").
 
-fin :- retractall(mamifero(_)).
+fin :- retractall(animal(_)).
 
 respuesta(A) :- mamifero(A), write('es un animal').
-respuesta(A) :- \+mamifero(A), agregar(A), write("Nuevo Conocimiento").
+respuesta(A) :- \+animal(A), agregar(A), write("Nuevo Conocimiento").

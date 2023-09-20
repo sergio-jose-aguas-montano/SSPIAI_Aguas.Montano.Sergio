@@ -1,5 +1,5 @@
 %Consultar el archivo S11
-inicio :- consult('S11.3.pl').
+inicio :- consult('s11.3.pl').
 
 agregar(A) :- assert(animal(A)).
 buscar(A) :- respuesta(A).
