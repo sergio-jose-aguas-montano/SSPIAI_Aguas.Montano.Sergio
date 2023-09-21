@@ -1,5 +1,6 @@
-:- dynamic animal/1.
-animal(delfin).
-animal(leon).
+:- dynamic mamifero/1.
 
-carnivoro(leon).
+mamifero(pato).
+mamifero(si).
+mamifero(no).
+
