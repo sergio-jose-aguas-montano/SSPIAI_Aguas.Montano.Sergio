@@ -1,7 +1,8 @@
 % Autor: [Sergio José Aguas Montaño - 217815601]
 
-% Cargar la base de conocimientos
-inicio :- consult('base_de_conocimientos.pl').
+% Cargar los archivos donde se guardan
+inicio :- consult('factorial.pl').
+inicio :- consult('fibonacci.pl').
 
 % Cálculo del factorial de un número
 factorial(1, 1) :- !.
@@ -11,8 +12,6 @@ factorial(X, Y) :-
     factorial(X1, Y1),
     Y is X * Y1,
     asserta(factorial(X, Y) :- !).
-
-%factorial(_,_) :- write("No existe el factorial de ese numero!\n").
 
 % Cálculo de la serie de Fibonacci
 fibonacci(0, 0) :- !.
@@ -26,19 +25,27 @@ fibonacci(N, X) :-
     X is X1 + X2,
     asserta(fibonacci(N, X) :- !).
 
-% Consulta y guarda el conocimiento en caso necesario
-consultar(C) :- C, guardar.
-
-% Guardar la base de conocimientos en un archivo
-guardar :-
-    tell('base_de_conocimientos.pl'),
-    listing(factorial/2),
+% Guardar la base de conocimientos en diferentes archivos
+guardar_fib :-
+    tell('fibonacci.pl'),
     listing(fibonacci/2),
     told.
 
+guardar_fac :-
+        tell('factorial.pl'),
+        listing(factorial/2),
+        told.
+
+%Guardado para ambos archivos.
+guardar :- 
+    guardar_fac,
+    guardar_fib.
+
 fin :-  
     retractall(factorial(_,_)),
-    tell('base_de_conocimientos.pl'),
-    listing(factorial/2),
+    tell('fibonacci.pl'),
     listing(fibonacci/2),
+    told,
+    tell('factorial.pl'),
+    listing(factorial/2),
     told.

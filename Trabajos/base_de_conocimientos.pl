@@ -1,3 +1,5 @@
+%Uso de base de conocimiento como pruba
+
 :- dynamic factorial/2.
 
 factorial(9, 362880) :-
