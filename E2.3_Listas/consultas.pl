@@ -33,7 +33,12 @@ menu :- write("\n\n"),
         opcion(Opc).
 
 % OPCIONES DEL MENÚ
-opcion(Opc) :-  (Opc < 1 ; Opc >9), write("\n\n>> Opcion incorrecta, intentalo de nuevo <<"), menu. % Opción 'default' ---> En caso de colocar opción incorrecta
+opcion(Opc) :-  (
+                    (Opc < 1);
+                    (Opc > 8)
+                ), 
+                write("\n\n>> Opcion incorrecta, intentalo de nuevo <<"),
+                menu. % Opción 'default' ---> En caso de colocar opción incorrecta
 
 menu_listas :-  mensaje,
                 write("|                        1. Figuras                                         |\n"),

@@ -4,7 +4,7 @@ figuras([cuadrado, rectangulo, circulo]).
 
 :- dynamic colores/1.
 
-colores([azul, rojo]).
+colores([azul, rojo, verde]).
 
 :- dynamic nombres/1.
 
@@ -12,9 +12,9 @@ nombres([melanie, sergio]).
 
 :- dynamic numeros/1.
 
-numeros([1, 2]).
+numeros([1, 2, 43, 5]).
 
 :- dynamic letras/1.
 
-letras([e, a]).
+letras([e, a, v]).
 
