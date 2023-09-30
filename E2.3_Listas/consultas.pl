@@ -20,13 +20,13 @@ menu :- write("\n\n"),
         write("|~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|\n"),
         write("|                          4. Agregar a lista                               |\n"),
         write("|~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|\n"),
-        write("|                          6. Eliminar de lista                             |\n"),
+        write("|                          5. Eliminar de lista                             |\n"),
         write("|~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|\n"),
-        write("|                          7. Longitud de lista                             |\n"),
+        write("|                          6. Longitud de lista                             |\n"),
         write("|~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|\n"),
-        write("|                          8. Ordenar lista                                 |\n"),
+        write("|                          7. Ordenar lista                                 |\n"),
         write("|~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|\n"),
-        write("|                          9. Salir                                         |\n"),
+        write("|                          8. Salir                                         |\n"),
         write("|~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|\n"),
         write("\nEJEMPLO DE SELECCION: 1. (Numero de opcion seguido de un punto)\n"),
         read(Opc),
@@ -84,8 +84,44 @@ buscarOAgregar(X, Elemento, Numero_lista) :-
         );
         Respuesta = 'no' -> write("Elemento no agregado a la lista.\n")
     ).
-            
-    
+
+opcion(2) :-menu_listas,
+            write("\nSelecciona la lista a enlistar elementos:"),
+            read(Enlistar),
+            (
+                (Enlistar = 1 -> figuras(X));
+                (Enlistar = 2 -> colores(X));
+                (Enlistar = 3 -> nombres(X));
+                (Enlistar = 4 -> numeros(X));
+                (Enlistar = 5 -> letras(X))
+            ),
+            enlistarElementos(X), % Llama al predicado para enlistar elementos
+            menu.
+
+opcion(3) :- menu_listas,
+    write("\nIngresa el umero de la primera lista a concatenar:\n"),
+    read(Numero_lista1),
+    (
+        (Numero_lista1 = 1 -> figuras(X));
+        (Numero_lista1 = 2 -> colores(X));
+        (Numero_lista1 = 3 -> nombres(X));
+        (Numero_lista1 = 4 -> numeros(X));
+        (Numero_lista1 = 5 -> letras(X))
+    ),
+    write("\nIngresa el numero de la segunda lista a concatenar:\n"),
+    read(Numero_lista2),
+    (
+        (Numero_lista2 = 1 -> figuras(Y));
+        (Numero_lista2 = 2 -> colores(Y));
+        (Numero_lista2 = 3 -> nombres(Y));
+        (Numero_lista2 = 4 -> numeros(Y));
+        (Numero_lista2 = 5 -> letras(Y))
+    ),
+    concatenar(X, Y, Resultado),
+    write("\nResultado de la concatenacion:\n"),
+    write(Resultado),
+    menu. % Vuelve al menú principal
+
 
 opcion(4) :- menu_listas,
              write("\nIngresa el numero de la lista a agregar el elemento:\n"),
@@ -101,8 +137,62 @@ opcion(4) :- menu_listas,
              ),
              menu.
 
-opcion(9):- write("\nGracias por usar el programa! :D").
+opcion(5) :- menu_listas,
+    write("\nIngresa el numero de la lista a eliminar el elemento:\n"),
+    read(Eliminar_elemento),
+    (
+        (Eliminar_elemento = 1 -> figuras(Y));
+        (Eliminar_elemento = 2 -> colores(Y));
+        (Eliminar_elemento = 3 -> nombres(Y));
+        (Eliminar_elemento = 4 -> numeros(Y));
+        (Eliminar_elemento = 5 -> letras(Y))
+    ),
+    write("\nElementos de la lista seleccionada:\n"),
+    enlistarElementos(Y),
+    write("\nIngresa el elemento a eliminar:\n"),
+    read(Elemento),
+    (
+        (Eliminar_elemento = 1 -> eliminarFigura(Elemento));
+        (Eliminar_elemento = 2 -> eliminarColor(Elemento));
+        (Eliminar_elemento = 3 -> eliminarNombre(Elemento));
+        (Eliminar_elemento = 4 -> eliminarNumero(Elemento));
+        (Eliminar_elemento = 5 -> eliminarLetra(Elemento))
+    ),
+    menu.
 
+opcion(6) :- menu_listas,
+    write("\nSelecciona el numero de la lista a contar elementos (longitud):\n"),
+    read(Lista_largo),
+    (
+        (Lista_largo = 1 -> figuras(Y));
+        (Lista_largo = 2 -> colores(Y));
+        (Lista_largo = 3 -> nombres(Y));
+        (Lista_largo = 4 -> numeros(Y));
+        (Lista_largo = 5 -> letras(Y))
+    ),
+    longitud(Y, Longitud), % Usar el predicado longitud/2
+    write("\nLa longitud de la lista seleccionada es: "), write(Longitud), nl, % Mostrar la longitud
+    menu.
+
+opcion(7) :-
+            menu_listas,
+            write("\nIngresa el numero de la lista a ordenar:\n"),
+            read(Lista_ordenar),
+            (
+                (Lista_ordenar = 1 -> figuras(X));
+                (Lista_ordenar = 2 -> colores(X));
+                (Lista_ordenar = 3 -> nombres(X));
+                (Lista_ordenar = 4 -> numeros(X));
+                (Lista_ordenar = 5 -> letras(X))
+            ),
+            write("\nLista original:\n"),
+            enlistarElementos(X), % Muestra la lista original
+            sort(X, ListaOrdenada), % Ordena la lista
+            write("\nLista ordenada:\n"),
+            enlistarElementos(ListaOrdenada), % Muestra la lista ordenada
+            menu.
+
+opcion(8):- write("\nGracias por usar el programa! :D").
 
 mensaje :-  write("\n\n"),
             write("|~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|\n"),
@@ -153,6 +243,62 @@ nuevoLetra(Y) :-
     inserta(X, Y, Nueva), % Insertamos el nuevo elemento en la lista anterior
     asserta(letras(Nueva)), !, % Almacenamos la nueva lista con el nuevo elemento
     guardar.
+
+% Predicado para concatenar dos listas
+concatenar([], Lista, Lista).
+concatenar([X|Resto1], Lista2, [X|Resultado]) :- concatenar(Resto1, Lista2, Resultado).
+
+% Predicado para enlistar elementos de una lista uno por uno
+enlistarElementos([]) :- !.
+enlistarElementos([Elemento|Resto]) :-
+    write(Elemento), nl, % Imprime el elemento y un salto de línea
+    enlistarElementos(Resto).
+
+% Predicado para eliminar un elemento de una lista
+eliminarAlgo(Elemento, [Elemento|Resto], Resto) :- !.
+eliminarAlgo(Elemento, [Cabeza|Resto], [Cabeza|NuevaResto]) :-
+    eliminarAlgo(Elemento, Resto, NuevaResto).
+
+% Predicado para eliminar un elemento de una lista de acuerdo a la estructura proporcionada
+eliminarFigura(Elemento) :-
+    figuras(Y), % Obtener la lista de figuras
+    eliminarAlgo(Elemento, Y, NuevaLista), % Llamar al predicado eliminarAlgo
+    retract(figuras(_)), % Retirar la lista anterior
+    asserta(figuras(NuevaLista)), % Almacenar la nueva lista
+    guardar.
+
+eliminarColor(Elemento) :-
+    colores(Y), % Obtener la lista de figuras
+    eliminarAlgo(Elemento, Y, NuevaLista), % Llamar al predicado eliminarAlgo
+    retract(colores(_)), % Retirar la lista anterior
+    asserta(colores(NuevaLista)), % Almacenar la nueva lista
+    guardar.
+
+eliminarNombre(Elemento) :-
+    nombres(Y), % Obtener la lista de figuras
+    eliminarAlgo(Elemento, Y, NuevaLista), % Llamar al predicado eliminarAlgo
+    retract(nombres(_)), % Retirar la lista anterior
+    asserta(nombres(NuevaLista)), % Almacenar la nueva lista
+    guardar.
+
+eliminarNumero(Elemento) :-
+    numeros(Y), % Obtener la lista de figuras
+    eliminarAlgo(Elemento, Y, NuevaLista), % Llamar al predicado eliminarAlgo
+    retract(numeros(_)), % Retirar la lista anterior
+    asserta(numeros(NuevaLista)), % Almacenar la nueva lista
+    guardar.
+
+eliminarLetra(Elemento) :-
+    letras(Y), % Obtener la lista de figuras
+    eliminarAlgo(Elemento, Y, NuevaLista), % Llamar al predicado eliminarAlgo
+    retract(letras(_)), % Retirar la lista anterior
+    asserta(letras(NuevaLista)), % Almacenar la nueva lista
+    guardar.
+
+% Longitud
+% longitud([perro,gato,raton],L).
+longitud([],0).
+longitud([_|T], L) :- longitud(T, Lc), L is Lc + 1.
 
 guardar :-  tell('baseConocimientos.pl'), 
             listing(figuras/1), 
