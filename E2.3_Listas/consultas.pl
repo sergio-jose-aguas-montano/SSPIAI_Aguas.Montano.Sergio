@@ -1,9 +1,12 @@
 % Autor: Aguas Montaño Sergio José - 217815601
+
+%Consulta la base de conocimientos para hacer pruebas de los métodos sin tener que ingresar al menu
 pruebas :- consult('baseConocimientos.pl'), !.
 
 agregar(E, [], [E]) :- !.
 agregar(E, [H|T], [H|L]) :- agregar(E, T, L).
 
+%Inicia el menu y consulta de la base de conocimientos
 inicio :- consult('baseConocimientos.pl'), menu, !.
 
 menu :- write("\n\n"),
@@ -32,7 +35,7 @@ menu :- write("\n\n"),
         read(Opc),
         opcion(Opc).
 
-% OPCIONES DEL MENÚ
+% ********* OPCIONES DEL MENÚ *********
 opcion(Opc) :-  (
                     (Opc < 1);
                     (Opc > 8)
@@ -207,7 +210,7 @@ mensaje :-  write("\n\n"),
             write("|                                                                           |\n"),
             write("|~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|\n").
 
-%Metodos
+% ********* METODOS *********
 %Comprobar que la lista sea una lista
 lista([]).
 lista([_|T]) :- lista(T).
@@ -216,7 +219,7 @@ lista([_|T]) :- lista(T).
 buscar(X, [X|_]) :- !.
 buscar(X, [_|Ys]):- buscar(X, Ys).
 
-% Agregar
+% Agregar/Insertar
 inserta([],X,[X]).
 inserta([H|T], N, [H|R]) :- inserta(T, N, R).
 nuevoNumero(Y) :-
@@ -264,7 +267,7 @@ eliminarAlgo(Elemento, [Elemento|Resto], Resto) :- !.
 eliminarAlgo(Elemento, [Cabeza|Resto], [Cabeza|NuevaResto]) :-
     eliminarAlgo(Elemento, Resto, NuevaResto).
 
-% Predicado para eliminar un elemento de una lista de acuerdo a la estructura proporcionada
+% Predicado para eliminar un elemento de una lista
 eliminarFigura(Elemento) :-
     figuras(Y), % Obtener la lista de figuras
     eliminarAlgo(Elemento, Y, NuevaLista), % Llamar al predicado eliminarAlgo
@@ -301,7 +304,6 @@ eliminarLetra(Elemento) :-
     guardar.
 
 % Longitud
-% longitud([perro,gato,raton],L).
 longitud([],0).
 longitud([_|T], L) :- longitud(T, Lc), L is Lc + 1.
 
