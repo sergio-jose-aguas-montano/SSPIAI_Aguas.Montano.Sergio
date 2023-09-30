@@ -1,47 +1,29 @@
 %LISTAS
-
-%Simple
-mamiferos([leon,perro,tigre,caballo]).
-semana([lunes,martes,sabado]).
-
-%Listas de listas
-animales(
-    [leon,tigre,jaguar],
-    [caballo],
-    [perro,oso],
-    [oso_hormiguero]
-    ).
-%Aridad 'N'
-
-%Listas como relación
-animales(carnivoro,[lobo,leopardo,leon]).
-animales(insectivoro,[rana,camaleon]).
-
-%Listas y elementos
-platillos([pozole,pozolillo],tamales,[chile_relleno,chile_nogada],barbacoa).
-
-%Vectores
-vector([1,2,3],[x,y,z]).
-
+figuras([cuadrado]).
+colores([verde]).
+nombres([sergio]).
+numeros([1]).
+letras([a]).
 
 % OPERACIONES
 % Comprobar
 lista([]).
 lista([_|T]) :- lista(T).
 
-% Buscar
-% buscar(leon,[perro,leon,gato]).
+% Definir la regla para buscar un elemento en una lista
 buscar(E, [E|_]) :- !.
-buscar(E, [_|L]) :- buscar(E,L).
+buscar(E, [_|L]) :- buscar(E, L).
 
 % Agregar
 % agregar(perro, [leon,gato], NuevaLista).
-agregar(E,[],[E]) :- !.
-agregar(E,[H|T],[H|L]) :- agregar(E,T,L).
+inserta([],X,[X]).
+inserta([H|T], N, [H|R]) :- inserta(T, N, R).
 
-insertar(E,L,Lr) :- Lr - [E|L].
-insertar2(E,L,[E|L]).
-insertar3(E,L,[Rh|Rt]) :- Rh - E, Rt -L.
+nuevoElemento(Y):-lista(X), inserta(X, Y, Nueva), asserta(lista(Nueva)).
+
+%insertar(E,L,Lr) :- Lr = [E|L].
+%insertar2(E,L,[E|L]).
+insertar(Elemento, Lista, Resultado) :- Resultado = [Elemento | Lista].
 
 % Longitud
 % longitud([perro,gato,raton],L).
@@ -51,7 +33,7 @@ longitud([_|T], L) :- longitud(T, Lc), L is Lc + 1.
 % Concatenar
 % concatenar([leon, gato],[perro,raton],D).
 concatenar([],L,L).
-concatenar([H|T],L,[H|Result]) :- concatenar(T,L,Result).
+concatenar([H|T],L,[H,Result]) :- concatenar(T,L,Result).
 
 % Eliminar
 eliminar([],_,_).
