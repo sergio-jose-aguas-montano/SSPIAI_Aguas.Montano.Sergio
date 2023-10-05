@@ -27,3 +27,10 @@ inorden(H) :- write(H).
 %Izq, Der, Raiz
 postorden(arbol(HIzq, HDer, Raiz)) :- postorden(HIzq), postorden(HDer), write(Raiz), !.
 postorden(H) :- write(H).
+
+%Arbol Ternario - Raiz, HIzq, HCen, HDer
+arbol('S',arbol('e','r','g','i'),arbol('o ','A','g','u'),arbol('a','s','','')).
+
+%Raiz, Izq, Der
+preordenTernario(arbol(Raiz, HIzq, HCen, HDer)) :-  write(Raiz), preordenTernario(HIzq), preordenTernario(HCen), preordenTernario(HDer), !.
+preordenTernario(H) :- write(H).
