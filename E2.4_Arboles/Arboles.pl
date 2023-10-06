@@ -31,6 +31,14 @@ postorden(H) :- write(H).
 %Arbol Ternario - Raiz, HIzq, HCen, HDer
 arbol('S',arbol('e','r','g','i'),arbol('o ','A','g','u'),arbol('a','s','','')).
 
-%Raiz, Izq, Der
+%Preorden Trinario
 preordenTernario(arbol(Raiz, HIzq, HCen, HDer)) :-  write(Raiz), preordenTernario(HIzq), preordenTernario(HCen), preordenTernario(HDer), !.
 preordenTernario(H) :- write(H).
+
+%Inorden Trinario
+inordenTernario(arbol(HIzq, Raiz, HCen, HDer)) :- inordenTernario(HIzq), write(Raiz), inordenTernario(HCen), inordenTernario(HDer), !.
+inordenTernario(H) :- write(H).
+
+%Postorden Trinario
+postordenTernario(arbol(HIzq, HCen, HDer, Raiz)) :- postordenTernario(HIzq), postordenTernario(HCen), postordenTernario(HDer), write(Raiz), !.
+postordenTernario(H) :- write(H).
