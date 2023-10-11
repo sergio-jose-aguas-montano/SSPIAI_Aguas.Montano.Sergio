@@ -55,9 +55,8 @@ camino3(Origen,Destino,T) :- g3(Origen,Destino,T), imp_salto3(Origen,Destino,T),
 camino3(Origen,Destino,T) :- g3(Origen,NodosTemporales,P), imp_salto3(Origen,NodosTemporales,P), camino3(NodosTemporales,Destino,T1), T is P+T1, !.
 
 %Grafos con listas
-grafo(gnn, [a-i,a-b,a-d,b-c,b-e,d-e,d-i,e-f,m-m]).
-
+grafo(gnn, [a-i, a-b, a-d, b-c, b-e, d-e, d-i, e-f, m-m]).
 vecino_nd(N1,N2,G) :- grafo(G,L), (member(N1-N2,L);member(N2-N1,L)).
 
 %Grafo de Australia
-grafo(australia, [ao-tn,ao-as]).
+grafo(australia, ["tn"-"q", "tn"-"as", "tn"-"ao", "q"-"ngs", "as"-"ngs", "ao"-"as", "as"-"ngs", "ngs"-"v"]).
