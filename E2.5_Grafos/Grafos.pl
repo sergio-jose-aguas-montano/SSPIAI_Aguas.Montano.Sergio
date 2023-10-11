@@ -55,8 +55,45 @@ camino3(Origen,Destino,T) :- g3(Origen,Destino,T), imp_salto3(Origen,Destino,T),
 camino3(Origen,Destino,T) :- g3(Origen,NodosTemporales,P), imp_salto3(Origen,NodosTemporales,P), camino3(NodosTemporales,Destino,T1), T is P+T1, !.
 
 %Grafos con listas
-grafo(gnn, [a-i, a-b, a-d, b-c, b-e, d-e, d-i, e-f, m-m]).
-vecino_nd(N1,N2,G) :- grafo(G,L), (member(N1-N2,L);member(N2-N1,L)).
+grafo(gnn, [a-i, a-b, a-d, b-c, b-e, d-e, d-i, e-f, f-m]).
+vecino_nd(N1,N2,G) :- grafo(G,L), ((member(N1-N2,L);member(N2-N1,L)) -> write("Son vecinos"); write("No existe")).
 
 %Grafo de Australia
 grafo(australia, ["tn"-"q", "tn"-"as", "tn"-"ao", "q"-"ngs", "as"-"ngs", "ao"-"as", "as"-"ngs", "ngs"-"v"]).
+
+
+%Tipo de IF en Prolog: (Condition -> then; else)
+
+vecino_d(N1,N2,G) :- grafo(G,L), (member(N1>N2,L);member(N2>N1,L)).
+grafo(gdn, [f>a, a>e, a>d, d>c, b>f, b>c]).
+
+vecinos(N1,N2,G) :- grafo(G,L), (member(N1-N2,L);member(N2-N1,L)).
+
+%Conocer todos los vertices/nodos de un grafo
+vertices(G,Ln) :-   
+    %bagof - devuelve una lista con los datos consultados
+    %bagof(N1,N2^vecinos(N1,N2,G), Ln).
+
+    %setof - devuelve una lista con los datos consultados aplicando sort
+    setof(N1,N2^vecinos(N1,N2,G), Ln).
+
+%listar_n(G) :- grafo(G,L), nodos(L, []).
+%nodos([],Lr) :- sort(Lr,Lf), write(Lf).
+%nodos([N1-N2|T], Lr) :- 
+%    L1 = [N1|Lr],
+%    L2 = [N2|L1],
+%    nodos(T,L2).
+
+imprimir_g(G) :- grafo(G,L), lista(L).
+lista([]).
+%Agregar el contador que aumente cuando imprima la lista
+lista([H|T]) :- write("\n\t- Arista: "), write(H), lista(T).
+
+recorrido(G,O,D,C) :- 
+    recorrido_aux(G,O,[D],C).
+
+recorrido_aux(_,O,[O|C1],[O|C1]).
+recorrido_aux(G,Ax,[Dx|C1],C) :- 
+    vecinos(Nt,Dx,G), 
+    not(member(Nt,[Dx|C1])), 
+    recorrido_aux(G,Ax,[Nt,Dx|C1],C).
