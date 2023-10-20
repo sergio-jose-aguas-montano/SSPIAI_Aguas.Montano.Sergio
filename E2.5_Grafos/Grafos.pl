@@ -1,5 +1,8 @@
 %Grafos
 
+%Carga los grafos de la base de datos, los que contiene este archivo son los vistos en clase y sirvieron para las pruebas
+inicio :- consult('nodos.pl').
+
 %Grafo 1
 g1(a,b).
 g1(a,d).
@@ -143,14 +146,12 @@ camino(Grafo, Origen, Destino, Visitados, Camino) :-
     \+ member(NodoIntermedio, Visitados), % Asegurarse de no visitar el mismo nodo dos veces
     camino(Grafo, NodoIntermedio, Destino, [NodoIntermedio | Visitados], Camino).
 
-% Predicado para guardar el grafo en un archivo
+%Guardado de los grafos en el archivo
 guardar :-
     tell('nodos.pl'),
     listing(grafo/2),
     told,
     write('Grafo guardado en el archivo.').
-
-inicio :- consult('nodos.pl').
 
 %Crea el grafo con la conexion que se le indique en los parametros
 crear_Grafo(N1,N2,Ngrafo):- \+grafo(Ngrafo,_), assert(grafo(Ngrafo,[])), agregar_Nodos(N1,N2,Ngrafo).
@@ -175,3 +176,30 @@ agregar_Bc(Ngrafo,Lista):-
     guardar.
 %Inserta nuevos valores en la lista, en este caso, las conexiones entre nodos
 insertar(E,L,Lr):- Lr = [E|L].
+
+%Encontrar los caminos Hamiltonianos en el grafo
+% Ejemplo de uso: recorrido_hamiltoniano(gnn, Recorrido, a).
+hamiltoniano(Grafo, Recorrido, NodoInicial) :-
+    % Obtener la lista de nodos del grafo
+    vertices(Grafo, Nodos),
+    % Iniciar el recorrido desde el NodoInicial
+    hamiltoniano_aux(Grafo, NodoInicial, Nodos, [NodoInicial], Recorrido).
+
+% Caso base: Se ha visitado todos los nodos y se ha vuelto al nodo inicial
+hamiltoniano_aux(_, NodoActual, [NodoInicial | RestoNodos], CaminoParcial, Recorrido) :-
+    % Comprobar si se ha vuelto al nodo inicial y se han visitado todos los nodos
+    NodoActual = NodoInicial,
+    length(CaminoParcial, N), % Número de nodos visitados
+    length(RestoNodos, M),   % Número de nodos no visitados
+    N =:= M + 1,             % Debe haber un nodo no visitado y volver al inicial
+    reverse(CaminoParcial, Recorrido). % Invertir el camino para obtener el recorrido final
+
+% Caso recursivo: Seleccionar el siguiente nodo para visitar
+hamiltoniano_aux(Grafo, NodoActual, NodosRestantes, CaminoParcial, Recorrido) :-
+    select(NodoSiguiente, NodosRestantes, RestoNodos), % Seleccionar un nodo no visitado
+    vecinos(NodoActual, NodoSiguiente, Grafo), % Verificar si son vecinos
+    hamiltoniano_aux(Grafo, NodoSiguiente, RestoNodos, [NodoSiguiente | CaminoParcial], Recorrido).
+
+recorrido_hamiltoniano(Grafo, Recorrido, NodoInicial) :-
+    nodo_existente(NodoInicial, Grafo), % Verificar que el NodoInicial exista en el grafo
+    hamiltoniano(Grafo, Recorrido, NodoInicial).
