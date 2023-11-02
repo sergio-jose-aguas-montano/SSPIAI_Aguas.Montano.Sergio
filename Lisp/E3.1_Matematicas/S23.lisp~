@@ -1,0 +1,60 @@
+;Common LISP 
+; List Proessing
+(write-line "Hola mundo de nuevo")
+
+(defun cuadrado (x) (* x x))
+
+(defun patito ()
+  (setq variable (read))
+  (print variable)
+)
+
+(defun compa (x y)
+  (if (> x y)
+      (format t "~d es mayor" x)
+   (format t "~d es mayor" y)
+      )
+  )
+
+(defun algo (x)
+ (case x
+   (1 (princ "Enero"))
+   (2 (princ "Febrero"))
+   )
+)
+
+
+(defun ciclo (ini fin aum)
+  (loop
+     (write "hola, buenas noshes")
+     (setq ini (+ ini aum))
+     (terpri)
+     (when (>= ini fin)
+       (return ini))
+       )
+)
+
+
+(defun ciclo2 (in fin aum)
+  (dotimes (in fin)
+     (write in)
+     (setq in (+ in aum))
+     (terpri)
+     )
+)
+
+
+(setf (symbol-function 'cuad)
+      (landa (x) (* x x))
+)
+
+
+(defun factorial (n)
+  (if (> n 1)
+      (* n (factorial(- n 1)))
+      1)
+)
+
+
+
+

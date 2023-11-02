@@ -1,0 +1,11 @@
+(setf lista '(1 2 3 4 5))
+(setf lista2 '(a b c d e))
+(setf lista3 '(1 2 3 a b c))
+(setf lista4 '())
+
+;CAR: Contents of the Address part of Register number
+;CDR: Contents of the Decrement part of Register number
+;CONS
+;LIST
+;APPEND
+;MEMBER

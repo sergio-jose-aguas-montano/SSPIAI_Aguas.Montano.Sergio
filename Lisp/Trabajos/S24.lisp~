@@ -1,0 +1,42 @@
+(setf lista '(1 2 3 4 5))
+(setf lista2 '(a b c d e))
+(setf lista3 '(1 2 3 a b c))
+(setf lista4 '())
+(setf listc (list lista (cons lista3 lista2)))
+
+;CAR: Contents of the Address part of Register number
+;CDR: Contents of the Decrement part of Register number
+;C...R
+;FIRST, SECOND, ..., REST, LAST, NTH
+;CONS
+;LIST
+;APPEND
+;MEMBER
+
+;cdddr (caadr listc)
+
+;LENGTH
+;PILA - PUSH / POP
+(defun pop-it (l)
+(setf l (cdr l))
+)
+
+;SORT,MAPCAR, REDUCE, REMOVE-IF, COUNT-IF
+(setf l '(1 7 2 5 6 8 0 3 9 4))
+(sort l #'>)
+(sort l #'<)
+
+;copy-seq - lista de caracteres
+(setf s (copy-seq "uoashduf"))
+(sort s #'char-lessp)
+(sort s #'char-not-lessp)
+
+(mapcar #'(lambda(x)(* 2 x)) lista)
+
+;FORMAT T, WRITE, WRITE-LINE, PRINT, PRINC
+;READ, READ-LINE, READ-CHAR
+
+;Lista de propiedades
+(setf (get 'libro 'titulo) "El principito")
+(setf (get 'libro 'anio) "1943")
+(setf (get 'libro 'autor) "Antoine de Saint-Exupery")
