@@ -1,5 +1,4 @@
 ;Sergio Jose Aguas Montano - 217815601
-
 ;Common LISP 
 ; List Proessing
 
